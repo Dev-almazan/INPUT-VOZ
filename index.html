@@ -1,46 +1,93 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Input de voz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voz a Texto</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .voice-input {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .start-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .start-btn:disabled {
+            background-color: #ccc;
+        }
+    </style>
 </head>
 
 <body>
-    <input type="text" id="input-voz" placeholder="Habla aquí">
-
-    <script src="https://apis.google.com/js/api.js"></script>
+    <div class="container">
+        <input type="text" class="voice-input" id="voiceInput" placeholder="Habla aquí..." />
+        <button class="start-btn" id="startBtn">Iniciar</button>
+    </div>
     <script>
-        // Crea un cliente de API de reconocimiento de voz
-        const speechClient = new google.cloud.speech.v1.SpeechClient();
+        const voiceInput = document.getElementById('voiceInput');
+        const startBtn = document.getElementById('startBtn');
 
-        // Define una función para traducir voz a texto
-        function traducirVoz() {
-            // Obtén el audio del input de voz
-            const audio = document.querySelector("#input-voz").value;
 
-            // Crea una solicitud de reconocimiento de voz
-            const request = {
-                audioContent: audio,
-                languageCode: "es-MX",
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+
+
+
+            recognition.onstart = () => {
+                console.log('Voice is being recognized...');
             };
 
-            // Realiza la solicitud de reconocimiento de voz
-            speechClient.recognize(request, (err, response) => {
-                if (err) {
-                    // Handle error
-                } else {
-                    // Obtén el texto reconocido
-                    const transcript = response.results[0].alternatives[0].transcript;
 
-                    // Actualiza el input de texto con el texto reconocido
-                    document.querySelector("#input-texto").value = transcript;
-                }
+
+            recognition.onresult = (event) => {
+                const resultIndex = event.resultIndex;
+                const transcript = event.results[resultIndex][0].transcript;
+                voiceInput.value = transcript;
+                console.log(transcript);
+            };
+
+
+
+            startBtn.addEventListener('click', () => {
+                recognition.start();
             });
+        } else {
+            console.warn('Speech Recognition is not supported in this browser.');
+            startBtn.disabled = true;
         }
-
-        // Agrega un evento de clic al botón de traducir voz
-        document.querySelector("#input-voz").addEventListener("click", traducirVoz);
     </script>
 </body>
 
