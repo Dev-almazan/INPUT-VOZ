@@ -1,0 +1,56 @@
+        body {
+            display: grid !important;
+            height: auto;
+            margin: 0 auto;
+            width: 29%;
+            background-color: #d8dcde;
+        }
+
+        section {
+
+            width: 100%;
+            display: grid;
+            height: auto;
+            padding: 2%;
+            box-sizing: border-box;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 2%;
+            margin: 0 auto
+        }
+
+        section div {
+            padding: 2% 0;
+            display: grid;
+            align-items: center;
+            align-content: center;
+            align-self: center;
+        }
+
+        section input {
+            width: 100%;
+            padding: 4% 2%;
+            font-size: 1em;
+            width: 20rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        section .microfonos {
+            width: 100%;
+            display: grid;
+            align-content: center;
+            margin: 0 auto;
+            justify-content: center;
+            padding: 2%;
+            box-sizing: border-box;
+        }
+
+
+    @media screen and (max-width:1100px) {  
+    body {
+            width: 100%;
+            padding: 5%;
+            box-sizing: border-box;
+        }
+    
+    }
