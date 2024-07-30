@@ -26,6 +26,16 @@
             align-self: center;
         }
 
+                 section .microfonos {
+                     width: 100%;
+                     display: grid;
+                     align-content: center;
+                     margin: 0 auto;
+                     justify-content: center;
+                     padding: 2%;
+                     box-sizing: border-box;
+                 }
+
         section input {
             width: 100%;
             padding: 4% 2%;
@@ -35,15 +45,7 @@
             border-radius: 5px;
         }
 
-        section .microfonos {
-            width: 100%;
-            display: grid;
-            align-content: center;
-            margin: 0 auto;
-            justify-content: center;
-            padding: 2%;
-            box-sizing: border-box;
-        }
+       
 
 
     @media screen and (max-width:1100px) {  

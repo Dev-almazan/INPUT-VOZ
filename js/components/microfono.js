@@ -9,13 +9,8 @@ class microfono extends HTMLElement {
 
     static renderVoz(input, inputb) {
 
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (SpeechRecognition) // Inicializar si el api es compatible en el navegador
-        {
-
-
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             const recognition = new SpeechRecognition();
-            console.log(recognition)
             let elemento = document.getElementById(inputb);
             let svgs = document.getElementById(input);
 
@@ -30,22 +25,30 @@ class microfono extends HTMLElement {
 
             // Manejar el resultado
             recognition.onresult = (event) => {
+                let transcriptVerificado;
                 const resultIndex = event.resultIndex;
                 const transcript = event.results[resultIndex][0].transcript;
-                elemento.value = transcript;
+                    /*Validamos y exportamos traduccion de acuerdo al input respetando una expresion*/
+                    if(inputb == "email")
+                    {
+                        transcriptVerificado = transcript.replace(/\bpunto\b/gi, '.').replace(/guion medio/g, '-').replace(/guión medio/g, '-').replace(/guion bajo/g, '_').replace(/guión bajo/g, '_').replace(/\barroba\b/gi, '@').replace(/ /g, "").toLowerCase();
+                    }
+                    else if(inputb == "phone")
+                    {
+                        transcriptVerificado = transcript.replace(/[^\d\s]/g, '0').replace(/ /g, "");
+                    }
+                    else
+                    {
+                        transcriptVerificado= transcript;
+                    }
+                elemento.value = transcriptVerificado;
             };
 
             // Esperar la finalización del reconocimiento
             recognition.onend = () => {
                 svgs.classList.remove('efectoZ');
             };
-        }
-        else {
-            document.querySelectorAll(".microfonos").forEach(element => {
-                element.style.display = "none";
-            });
-            console.error('Este navegador no sporta el api de voz.');
-        }
+     
     }
 
 

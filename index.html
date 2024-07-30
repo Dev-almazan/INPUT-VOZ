@@ -19,16 +19,48 @@
                     </section>
                     <section>
                             <div>
-                                <input type="text" id="apellidos" placeholder="Ingresa apellidos"  />
+                                <input type="email" id="email" placeholder="Ingresa correo" list="list-email" autocomplete = "off"  />
+                                <datalist id="list-email" >
+                                    <option class="opt-email" data-dominio="@hotmail.com"></option>
+                                    <option class="opt-email" data-dominio="@yahoo.com.mx"></option>
+                                    <option class="opt-email" data-dominio="@msn.com"></option>
+                                    <option class="opt-email" data-dominio="@gmail.com"></option>
+                                    <option class="opt-email" data-dominio="@outlook.com"></option>
+                                    <option class="opt-email" data-dominio="@live.com.mx"></option>
+                                    <option class="opt-email" data-dominio="@prodigy.net.mx"></option>
+                                    <option class="opt-email" data-dominio="@icloud.com"></option></datalist>
+                                </datalist>
                             </div>
                             <div class="microfonos">
-                                <component-microfono data-input="apellidos" data-mic="mic-apellidos" ></component-microfono>
+                                <component-microfono data-input="email" data-mic="mic-email" ></component-microfono>
                             </div>
                     </section>
         <script src="./js/components/microfono.js"></script>                
         <script>
-            //mandamos a llamar componente
-            customElements.define("component-microfono", microfono);
+            //mandamos a llamar componente si es compatible con el navegador
+            if(window.SpeechRecognition || window.webkitSpeechRecognition)
+            {   
+                   customElements.define("component-microfono", microfono);
+            }
+           
+                     //agregamos un data list al input email
+                    const emailInput = document.getElementById('email');
+                    const datalist = document.getElementById('list-email');
+
+
+                    emailInput.addEventListener('input', function () {
+
+                          document.querySelectorAll(".opt-email").forEach(element => {
+                          if(!this.value.includes("@"))
+                          {
+                            element.value = this.value + element.getAttribute("data-dominio")
+                            element.text = this.value + element.getAttribute("data-dominio") 
+                          }
+                            
+                        });
+                 
+                    });
+
         </script>
     </body>
 
