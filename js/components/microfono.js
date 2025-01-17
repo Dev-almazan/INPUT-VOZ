@@ -142,7 +142,7 @@ class microfono extends HTMLElement {
                 </div>
             </div>
             <div class="card__content">
-                    <p id="resultTranslate">Escuchando..</p>
+                    <p id="resultTranslate">...</p>
             </div>
             </div>
       </div>
@@ -162,8 +162,10 @@ class microfono extends HTMLElement {
         const svg = shadowRoot.getElementById(elementId);
         const p = shadowRoot.getElementById('resultTranslate');
 
+
         // Agregar la clase de efecto (si es necesario)
         svg.classList.add('efectoZ')
+        p.innerHTML = 'Escuchando...'
         // Iniciar el reconocimiento
         recognition.start();
 
